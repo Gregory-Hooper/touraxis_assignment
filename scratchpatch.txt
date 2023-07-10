@@ -1,0 +1,65 @@
+CREATE DATABASE touraxis_assignment;
+
+CREATE TABLE IF NOT EXISTS users(
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  username varchar(200) NOT NULL,
+  first_name varchar(200) NOT NULL,
+  last_name varchar(200) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS tasks(
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  user_id integer NOT NULL
+  name varchar(200) NOT NULL,
+  description varchar(1000),
+  date_time datetime NOT NULL,
+  FOREIGN KEY (user_id)
+      REFERENCES users(id)
+      ON DELETE CASCADE
+);
+
+CREATE USER 'ghooper'@'localhost' IDENTIFIED BY 'client_pass';
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+flush privileges;
+
+
+INSERT INTO users (username, first_name, last_name) VALUES
+  ('jhenry', 'John', 'Henry'),
+  ('glisbon', 'Guy', 'Lisbon'),
+  ('ppompies', 'Piet', 'Pompies')
+
+
+
+INSERT INTO tasks (user_id, name, description, date_time) VALUES 
+(1, 'Trash', 'Take out the Trash', '2023-07-06 15:30:00')
+(1, 'Dishes', 'Wash the Dishes', '2023-07-06 16:00:00')
+(2, 'Mop', 'Mop the Floors', '2023-07-06 11:30:00')
+
+
+
+curl.exe -i -H "Content-Type: application/json" -X POST -d '{"username":"jsmith","first_name" : "John", "last_name" : "Smith"}' http://127.0.0.1:3000/user
+
+curl.exe -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://127.0.0.1:3000/users
+
+
+
+
+
+const dbConfig = require("../config/db.config.js");
+
+// Create a connection to the database
+const connection = mysql.createConnection({
+  host: dbConfig.HOST,
+  user: dbConfig.USER,
+  password: dbConfig.PASSWORD,
+  database: dbConfig.DB
+});
+
+
+
+
+
+
+
+
