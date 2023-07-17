@@ -44,13 +44,6 @@ exports.createUser = function(req, res) {
         });
     }
 
-    // Create a User
-    /*const user = new User({
-        username: req.body.username,
-        first_name: req.body.first_name,
-        last_name: req.body.last_name
-    });*/
-
     usersModel.createUser(req.body, function(error, results){
         if (error){
             res.status(500).send({
@@ -63,7 +56,7 @@ exports.createUser = function(req, res) {
 
 // Update a new User
 exports.updateUser = function(req, res) {
-    console.log(req.body + " ---------- " + req.params.id);
+    
     if (!req.body) {
         res.status(400).send({
           message: "JSON Content can not be empty!"

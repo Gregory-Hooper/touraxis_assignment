@@ -1,57 +1,43 @@
 const tasks = require("../models/tasks");
 
 //Loop through Tasks and 'Run' the task if the date is due
-
 function runTasks(){
-    tasks.getTaskResults(function(error, results){
+  tasks.getTaskResults(function(error, results){
         if (error){
             console.error("Error: " + error);
+            results({error: "No Task ID was provided."}, null);
             return;
         }
-        console.log(results);
+        console.log("----------START PROCESSING TASKS------------");
         Object.keys(results).forEach(taskKey => {
             const value = results[taskKey];
             let currentDate = new Date();
+            let task_id = value.id;
             let taskDate = value.date_time;
             let taskName = value.name;
-            if (taskDate < currentDate)
+            let taskStatus = value.status;
+            if ((taskStatus == 'Pending')&&(taskDate < currentDate))
             {
-                console.log("The " + taskName + " task has passed its time to run ["+taskDate+ " - " + currentDate +"]");    
+              console.log("The " + task_id+"-"+taskName + " task has passed its time to run ["+ taskStatus +": "+taskDate+ " - " + currentDate +"]");    
+              value.status = "Done";
+              tasks.updateTask(task_id,value,function(error,result){
+              if (error){
+                if (error.kind == "task not_found"){
+                  console.error("No Task ID was provided: " + error);
+                  results({error: "No Task ID was provided: " + task_id}, null);
+                }
+                else{
+                  console.error("Error Updating Task: " + error);
+                  results({error: "Error Updating Task: " + task_id}, null);
+                }
+              }    
+              });
             }
-            console.log(taskKey + ': ' + value.name + " - " + taskDate);
+            else if(taskStatus == 'Pending')console.log(taskStatus+": " +task_id+"-"+taskName+"["+ taskDate +"]"); 
           });
-    });
-    console.log("----------------------");
-}
-
-// Run Task Schedule initially
-runTasks();
-
-// Schedule RunTasks to run every 5 minutes - 5 minutes in milliseconds
-setInterval(runTasks, 1 * 60 * 1000);
-
-/*-------------------------------------------------------------------------
-const axios = require('axios');
-function fetchData() {
-  // Make the API call and process the data
-  axios.get('https://api.example.com/data')
-    .then(response => {
-      // Process the data received from the API
-      const data = response.data;
-
-      // Loop through the data and do something with each item
-      data.forEach(item => {
-        // Perform operations on each item
-        console.log(item);
-      });
-    })
-    .catch(error => {
-      console.error('Error fetching data:', error);
+          console.log("----------FININSHED PROCESSING TASKS------------");
     });
 }
 
-// Run fetchData initially
-fetchData();
-
-// Schedule fetchData to run every 5 minutes
-setInterval(fetchData, 5 * 60 * 1000); // 5 minutes in milliseconds*/
+// Schedule RunTasks to run every 60 seconds
+setInterval(runTasks, 60000);

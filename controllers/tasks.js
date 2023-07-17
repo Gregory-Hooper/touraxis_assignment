@@ -39,13 +39,6 @@ exports.createTask = function(req, res) {
         });
     }
 
-    // Create a User
-    /*const user = new User({
-        username: req.body.username,
-        first_name: req.body.first_name,
-        last_name: req.body.last_name
-    });*/
-
     tasksModel.createTask(req.body, function(error, results){
         if (error){
             res.status(500).send({

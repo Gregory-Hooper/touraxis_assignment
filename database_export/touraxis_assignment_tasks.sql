@@ -30,6 +30,7 @@ CREATE TABLE `tasks` (
   `name` varchar(200) NOT NULL,
   `description` varchar(1000) DEFAULT NULL,
   `date_time` datetime NOT NULL,
+  `status` varchar(200) NOT NULL DEFAULT 'Pending',
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `tasks_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
@@ -42,7 +43,8 @@ CREATE TABLE `tasks` (
 
 LOCK TABLES `tasks` WRITE;
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
-INSERT INTO `tasks` VALUES (5,6,'Clean and Mop','Clean up and mop Floors','2023-07-06 09:30:00');
+INSERT INTO `tasks` VALUES (1,1,'Clean and Mop','Clean up and mop Floors','2023-07-20 09:30:00','Pending');
+INSERT INTO `tasks` VALUES (2,2,'Do Dishes','Clean the dishes','2023-08-06 09:30:00','Pending'), (3,3,'Dry Dishes','Dry the dishes','2023-08-06 10:30:00','Pending');
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
