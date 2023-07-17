@@ -39,7 +39,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (2,'ppompies','Piet','Pompies'),(4,'glisbon','Guy','Lisbon'),(5,'ppompies','Piet','Pompies'),(6,'jsmith','John','Smith'),(7,'jsmith2','John2','Smith2'),(8,'jsmith3','John3','Smith3'),(9,'ghooper','John3','Smith3'),(10,'ghooper','John3','Smith3'),(11,'ghooper','John3','Smith3'),(12,'pagenbag','Pieter','Agenbag');
+INSERT INTO `users` VALUES (1,'ppompies','Piet','Pompies'),(2,'glisbon','Guy','Lisbon'),(3,'jsmith','John','Smith'),(4,'rlewis','Ryan','Lewis'),(5,'mrhodes','Monty','Rhodes'),(6,'nisaacs','Nathan','Isaacs'),(7,'tmartin','Tammy','Martin'),(8,'dkotze','Darren','Kotze');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

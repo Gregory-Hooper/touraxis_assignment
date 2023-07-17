@@ -6,6 +6,7 @@ const Task = function(task) {
     this.name = task.first_name;
     this.description = task.description;
     this.date_time = task.date_time;
+    this.status = task.status;
 };
 
 //Get all tasks
@@ -13,7 +14,7 @@ Task.getTaskResults = function (result) {
     dbConn.query('SELECT * FROM tasks', function (error, taskResults) {
         if (error) {
             console.log("Error: " + error);
-            result(null, error);
+            result(error, null);
             return;
         }
         console.log("List of Tasks: " + JSON.stringify(taskResults));
@@ -90,7 +91,7 @@ Task.updateTask = function (task_id, task, result) {
         description = task.description;
     }
 
-    dbConn.query("UPDATE tasks SET user_id = ?, name = ?, description = ?, date_time = ? WHERE id = ?", [task.user_id, task.name, description, task.date_time, task_id], function (error, results, fields) {
+    dbConn.query("UPDATE tasks SET user_id = ?, name = ?, description = ?, date_time = ?, status = ? WHERE id = ?", [task.user_id, task.name, description, task.date_time, task.status, task_id], function (error, results, fields) {
         if (error) {
             console.log("error: ", error);
             result(error, null);

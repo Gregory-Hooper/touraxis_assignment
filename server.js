@@ -10,20 +10,8 @@ app.use(bodyParser.urlencoded({
 require("./routes/routes.js")(app);
 
 // Spawn the process of running through the tasks and checking the task date.
-const { exec } = require('child_process');
-
-// Spawn a new child process to run the function
-exec(runTasks(), function(error, stderr) {
-    if (error) {
-      console.error(`error: ${error.message}`);
-      return;
-    }
-  
-    if (stderr) {
-      console.error(`stderr: ${stderr}`);
-      return;
-    }
-  });
+const { spawn } = require('child_process');
+var child = spawn('node', ['.\\services\\schedule.js'], { stdio: [ null, 'inherit', null ] });
 
 // Set the port on which it should listen on
 app.listen(3000, function () {
